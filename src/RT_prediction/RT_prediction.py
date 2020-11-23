@@ -4,7 +4,7 @@ import sklearn.tree
 import numpy as np
 from sklearn.model_selection import LeaveOneOut
 from sklearn.metrics import r2_score
-
+import os
 
 class RT_predictor():
     def __init__(self,n_jobs=2):
@@ -30,14 +30,13 @@ class RT_predictor():
         for c in cols:
             tmp = X_train.loc[:, c]
             try:
-                sdev = np.std([float(x) for x in tmp.values])
                 good = not any(pd.isna(x) for x in tmp.values)
                 if good:
                     sdev = np.std([float(x) for x in tmp.values])
                     if sdev > 0:
                         goodCols.append(c)
             except:
-                print(c,"non-real valued descriptor")
+                print(c,": non-real valued descriptor")
 
         return goodCols
 
@@ -52,3 +51,8 @@ class RT_predictor():
             y_preds.append(self.fit_predict(X_train,y_train,X_test,numTree,max_feats,max_depth))
             y_true.append(y_test)
         return r2_score(y_true, y_preds)
+
+    def get_training_data_pHILIC_IROA(self):
+        application_path = os.path.dirname(__file__)
+        fn = os.path.join(application_path, "molecular_properties.csv")
+        return pd.read_csv(fn)
