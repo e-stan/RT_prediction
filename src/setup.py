@@ -24,6 +24,6 @@ setup(
     'Programming Language :: Python :: 3.7',      #Specify which pyhton versions that you want to support
   ],
   package_data={
-    "":["molecular_properties.csv"]
+    "":["molecular_properties.csv","compute_molecular_properties.R"]
     }
 )

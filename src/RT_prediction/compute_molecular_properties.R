@@ -1,11 +1,12 @@
-
 args = commandArgs(trailingOnly=TRUE)
+options(warn=-1)
 
 fn = args[1]
 outFn = args[2]
 
 options(java.parameters = "-Xmx4096m")
 suppressPackageStartupMessages(library(rcdk))
+
 data = read.csv(fn)
 
 mols <- parse.smiles(as.character(data[,2]))
